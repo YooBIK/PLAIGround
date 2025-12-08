@@ -14,7 +14,7 @@ const MeetingDetail = () => {
 
   const fetchMeeting = async () => {
     try {
-      const response = await axios.get(`https://14.39.172.187:10000/api/meetings/${id}`)
+      const response = await axios.get(`http://14.39.172.187:10000/api/meetings/${id}`)
       setMeeting(response.data)
     } catch (error) {
       console.error('회의록 조회 오류:', error)
@@ -135,14 +135,14 @@ const MeetingDetail = () => {
 
         <div className="export-buttons">
           <a
-            href={`https://14.39.172.187:10000/api/meetings/${id}/export/pdf`}
+            href={`http://14.39.172.187:10000/api/meetings/${id}/export/pdf`}
             className="btn btn-secondary"
             download
           >
               📄 PDF 다운로드
           </a>
           <a
-            href={`https://14.39.172.187:10000/api/meetings/${id}/export/docx`}
+            href={`http://14.39.172.187:10000/api/meetings/${id}/export/docx`}
             className="btn btn-secondary"
             download
           >
