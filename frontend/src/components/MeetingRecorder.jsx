@@ -94,7 +94,7 @@ const MeetingRecorder = () => {
       // 전사 결과를 저장하도록 요청
       formData.append('save_transcript', 'true')
 
-      const response = await axios.post('http://14.39.172.187:10000/api/transcribe', formData, {
+      const response = await axios.post('https://14.39.172.187:10000/api/transcribe', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -125,7 +125,7 @@ const MeetingRecorder = () => {
 
     setIsProcessing(true)
     try {
-      const response = await axios.post('http://14.39.172.187:10000/api/summarize', {
+      const response = await axios.post('https://14.39.172.187:10000/api/summarize', {
         transcript: transcript,
         title: meetingTitle || `회의 ${new Date().toLocaleString('ko-KR')}`
       })
@@ -169,7 +169,7 @@ const MeetingRecorder = () => {
       const formData = new FormData()
       formData.append('file', file)
 
-      const response = await axios.post('http://14.39.172.187:10000/api/transcribe', formData, {
+      const response = await axios.post('https://14.39.172.187:10000/api/transcribe', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -349,14 +349,14 @@ const MeetingRecorder = () => {
 
             <div className="action-buttons">
               <a
-                href={`http://14.39.172.187:10000/api/meetings/${summary.id}/export/pdf`}
+                href={`https://14.39.172.187:10000/api/meetings/${summary.id}/export/pdf`}
                 className="btn btn-secondary"
                 download
               >
                 📄 PDF 다운로드
               </a>
               <a
-                href={`http://14.39.172.187:10000/api/meetings/${summary.id}/export/docx`}
+                href={`https://14.39.172.187:10000/api/meetings/${summary.id}/export/docx`}
                 className="btn btn-secondary"
                 download
               >
