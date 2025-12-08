@@ -13,7 +13,7 @@ const MeetingHistory = () => {
 
   const fetchMeetings = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/meetings')
+      const response = await axios.get('http://14.39.172.187:10000/api/meetings')
       setMeetings(response.data)
     } catch (error) {
       console.error('회의록 조회 오류:', error)
