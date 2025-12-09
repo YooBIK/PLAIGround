@@ -11,6 +11,7 @@ const MeetingRecorder = () => {
   const [meetingTitle, setMeetingTitle] = useState('')
   const [micError, setMicError] = useState(null)
   const [showFileUpload, setShowFileUpload] = useState(false)
+  const [activeTab, setActiveTab] = useState('record')
   const mediaRecorderRef = useRef(null)
   const audioChunksRef = useRef([])
   const fileInputRef = useRef(null)
@@ -71,6 +72,7 @@ const MeetingRecorder = () => {
       const errorInfo = getErrorMessage(error)
       setMicError(errorInfo)
       setShowFileUpload(errorInfo.showFileUpload)
+      setActiveTab('upload')
     }
   }
 
@@ -160,7 +162,7 @@ const MeetingRecorder = () => {
     }
 
     setMicError(null)
-    setShowFileUpload(false)
+    setShowFileUpload(true)
     setAudioBlob(file)
     
     // 자동으로 전사 시작
@@ -192,10 +194,42 @@ const MeetingRecorder = () => {
     }
   }
 
+  const handleTabChange = (tab) => {
+    if (tab === activeTab) return
+    // 정리: 기존 녹음/전사 상태를 초기화하고 탭 전환
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+      mediaRecorderRef.current.stop()
+    }
+    setActiveTab(tab)
+    setIsRecording(false)
+    setMicError(null)
+    setAudioBlob(null)
+    setTranscript('')
+    setSummary(null)
+    setShowFileUpload(tab === 'upload')
+  }
+
+  const shouldShowFileUpload = activeTab === 'upload' || (showFileUpload && !audioBlob)
+
   return (
     <div className="meeting-recorder">
       <div className="recorder-container">
         <h1>회의 시작하기</h1>
+
+        <div className="mode-tabs">
+          <button
+            className={`tab-btn ${activeTab === 'record' ? 'active' : ''}`}
+            onClick={() => handleTabChange('record')}
+          >
+            🎙️ 음성 녹음
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'upload' ? 'active' : ''}`}
+            onClick={() => handleTabChange('upload')}
+          >
+            📁 파일 업로드
+          </button>
+        </div>
         
         <div className="meeting-title-input">
           <label>회의 제목 (선택사항)</label>
@@ -208,17 +242,20 @@ const MeetingRecorder = () => {
           />
         </div>
 
-        <div className="recording-controls">
-          {!isRecording ? (
-            <button className="btn btn-primary" onClick={startRecording}>
-              🎙️ 회의 시작
-            </button>
-          ) : (
-            <button className="btn btn-stop" onClick={stopRecording}>
-              ⏹️ 회의 종료
-            </button>
-          )}
-        </div>
+        {activeTab === 'record' && (
+          <div className="recording-controls">
+            {!isRecording ? (
+              <button className="btn btn-primary" onClick={startRecording}>
+                🎙️ 녹음 시작
+              </button>
+            ) : (
+              <button className="btn btn-stop" onClick={stopRecording}>
+                ⏹️ 녹음 종료
+              </button>
+            )}
+            <p className="subtext">마이크로 바로 녹음하거나 탭을 바꿔 파일을 업로드할 수 있습니다.</p>
+          </div>
+        )}
 
         {micError && (
           <div className="error-message">
@@ -238,7 +275,7 @@ const MeetingRecorder = () => {
           </div>
         )}
 
-        {showFileUpload && !audioBlob && (
+        {shouldShowFileUpload && (
           <div className="file-upload-section">
             <input
               type="file"
@@ -253,7 +290,7 @@ const MeetingRecorder = () => {
             >
               📁 오디오 파일 업로드
             </button>
-            <p className="upload-hint">지원 형식: WAV, MP3, M4A 등</p>
+            <p className="upload-hint">지원 형식: WAV, MP3, M4A 등 / 선택 즉시 전사합니다.</p>
           </div>
         )}
 

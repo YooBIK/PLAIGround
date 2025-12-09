@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import MeetingRecorder from './components/MeetingRecorder'
-import MeetingHistory from './components/MeetingHistory'
+import Home from './pages/Home'
 import MeetingDetail from './components/MeetingDetail'
 import './App.css'
 
@@ -14,17 +13,13 @@ function App() {
             <Link to="/" className="logo">
               🎙️ AI Meeting Note
             </Link>
-            <div className="nav-links">
-              <Link to="/">회의 시작</Link>
-              <Link to="/history">회의 아카이브</Link>
-            </div>
           </div>
         </nav>
 
         <main className="main-content">
           <Routes>
-            <Route path="/" element={<MeetingRecorder />} />
-            <Route path="/history" element={<MeetingHistory />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/history" element={<Home />} />
             <Route path="/meeting/:id" element={<MeetingDetail />} />
           </Routes>
         </main>

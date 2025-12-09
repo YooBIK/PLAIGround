@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import './MeetingHistory.css'
 
-const MeetingHistory = () => {
+const MeetingHistory = ({ showTitle = true }) => {
   const [meetings, setMeetings] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -47,7 +47,7 @@ const MeetingHistory = () => {
   return (
     <div className="meeting-history">
       <div className="history-container">
-        <h1>회의 아카이브</h1>
+        {showTitle && <h1>회의 아카이브</h1>}
         
         {meetings.length === 0 ? (
           <div className="empty-state">

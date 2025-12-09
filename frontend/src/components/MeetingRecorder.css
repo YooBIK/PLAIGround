@@ -15,6 +15,31 @@
   text-align: center;
 }
 
+.mode-tabs {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  border: 2px solid #e0e0e0;
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+  color: #555;
+  transition: all 0.2s;
+}
+
+.tab-btn.active {
+  border-color: #667eea;
+  color: #667eea;
+  box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+}
+
 .meeting-title-input {
   margin-bottom: 2rem;
 }
@@ -43,6 +68,12 @@
 .recording-controls {
   text-align: center;
   margin-bottom: 2rem;
+}
+
+.subtext {
+  margin-top: 0.5rem;
+  color: #666;
+  font-size: 0.95rem;
 }
 
 .btn {
